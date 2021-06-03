@@ -2,7 +2,7 @@ import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter
 import { Element, ElementType, MainService } from 'src/app/services/main.service';
 
 @Component({
-  selector: 'ui-table',
+  selector: 'app-ui-table',
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss']
 })
