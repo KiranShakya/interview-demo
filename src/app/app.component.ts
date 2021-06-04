@@ -12,12 +12,15 @@ export class AppComponent implements OnInit {
 
   constructor(private readonly mainService: MainService) {}
 
-  ngOnInit() {
-    (async () => {
-      this.elements = await this.mainService.getAllElements().toPromise();
-    })();
+  ngOnInit(): void {
+     this.mainService.getAllElements().toPromise().then(
+       elements => this.elements = elements
+     ).catch(ex => {
+       // TODO: do something with error
+     });
+
   }
-  onSelected(elementUri: string) {
+  onSelected(elementUri: string): void {
     this.selected = this.elements.find(el => el.uri === elementUri);
   }
 }
