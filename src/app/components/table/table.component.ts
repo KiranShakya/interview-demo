@@ -1,7 +1,9 @@
 import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
-import { Element, ElementType, MainService } from 'src/app/services/main.service';
+import { MainService } from 'src/app/services/main.service';
 import { Subject, of } from 'rxjs';
 import { takeUntil, catchError } from 'rxjs/operators';
+import { ElementType } from 'src/app/model/element-type.model';
+import { Element } from 'src/app/model/element.model';
 
 @Component({
   selector: 'ui-table',
