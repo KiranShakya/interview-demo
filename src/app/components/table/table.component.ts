@@ -43,7 +43,7 @@ export class TableComponent implements OnInit, OnDestroy {
 
   public onClicked(element) {
     if (element) {
-      this.selected.emit(element.uri);
+      this.selected.emit(element);
       this.selectedElement = element;
     }
   }

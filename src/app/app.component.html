@@ -1,2 +1,5 @@
-<ui-table [elements]="elements" (selected)="onSelected($event)"></ui-table>
+<ng-container *ngIf="elements$ | async as elements; else showError">
+  <ui-table [elements]="elements" (selected)="onSelected($event)"></ui-table>
+</ng-container>
+<ng-template #showError> Error </ng-template>
 <ui-detail-panel [element]="selected" *ngIf="selected"></ui-detail-panel>

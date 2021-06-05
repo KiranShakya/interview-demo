@@ -1,20 +1,25 @@
-<dl>
-    <dt>
-        Uri
-    </dt>
-    <dd>
-        {{ element.uri }}
-    </dd>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        {{ (elementTypes | findByKeyValue: 'uri' : element.type)?.name }}
-    </dd>
-    <dt>
-        Name
-    </dt>
-    <dd>
-        {{ element.name }}
-    </dd>
-</dl>
+<ng-container *ngIf="elementTypes$ | async as elementTypes; else error">
+    <dl>
+        <dt>
+            Uri
+        </dt>
+        <dd>
+            {{ element.uri }}
+        </dd>
+        <dt>
+            Type
+        </dt>
+        <dd>
+            {{ (elementTypes | findByKeyValue: 'uri' : element.type)?.name }}
+        </dd>
+        <dt>
+            Name
+        </dt>
+        <dd>
+            {{ element.name }}
+        </dd>
+    </dl>
+</ng-container>
+<ng-template #error>
+    Error
+</ng-template>
