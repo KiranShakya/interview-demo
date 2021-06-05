@@ -1,19 +1,23 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { Element, ElementType, MainService } from 'src/app/services/main.service';
+import { Subject, of } from 'rxjs';
+import { takeUntil, catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'ui-table',
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss']
 })
-export class TableComponent implements OnInit {
+export class TableComponent implements OnInit, OnDestroy {
+  _destroyed$: Subject<boolean> = new Subject<boolean>();
+
   @Input()
   public set elements(elements: Array<Element>) {
     /** We want to show same type elements in same column */
     elements.forEach((element) => {
       const type = element.type.split('@').shift();
       this.elementTypeMap[type] ? this.elementTypeMap[type].push(element) : (this.elementTypeMap[type] = [element]);
-      this.elementCountPerType[type] = this.elementTypeMap[type].length
+      this.elementCountPerType[type] = this.elementTypeMap[type].length;
     });
   }
 
@@ -28,18 +32,7 @@ export class TableComponent implements OnInit {
   constructor(private readonly mainService: MainService) {}
 
   ngOnInit() {
-    (async () => {
-      await (
-        await this.mainService.getAllElementTypes().toPromise()
-      ).forEach((type) => {
-        const _ =
-          this.elementTypes.find((et) => et.uri === type.uri.split('@').shift()) ||
-          this.elementTypes.push({
-            ...type,
-            uri: type.uri.split('@').shift()
-          });
-      });
-    })();
+    this.rebuildAllElementTypes();
   }
 
   public get rows(): Array<undefined> {
@@ -51,5 +44,31 @@ export class TableComponent implements OnInit {
       this.selected.emit(element.uri);
       this.selectedElement = element;
     }
+  }
+
+  private rebuildAllElementTypes() {
+    this.mainService
+      .getAllElementTypes()
+      .pipe(
+        takeUntil(this._destroyed$),
+        catchError((err) => {
+          return of(err);
+        })
+      )
+      .subscribe((res) => {
+        res.forEach((type) => {
+          const _ =
+            this.elementTypes.find((et) => et.uri === type.uri.split('@').shift()) ||
+            this.elementTypes.push({
+              ...type,
+              uri: type.uri.split('@').shift()
+            });
+        });
+      });
+  }
+
+  ngOnDestroy() {
+    this._destroyed$.next();
+    this._destroyed$.complete();
   }
 }
