@@ -4,6 +4,7 @@ import { Subject, of } from 'rxjs';
 import { takeUntil, catchError } from 'rxjs/operators';
 import { ElementType } from 'src/app/model/element-type.model';
 import { Element } from 'src/app/model/element.model';
+import { DataBuildService } from 'src/app/services/data-build.service';
 
 @Component({
   selector: 'ui-table',
@@ -31,10 +32,10 @@ export class TableComponent implements OnInit, OnDestroy {
   public elementCountPerType: { [type: string]: number } = {};
   public selectedElement: Element = null;
 
-  constructor(private readonly mainService: MainService) {}
+  constructor(private readonly mainService: MainService, private dataBuildService: DataBuildService) {}
 
   ngOnInit() {
-    this.rebuildAllElementTypes();
+    this.listAllElementTypes();
   }
 
   public get rows(): Array<undefined> {
@@ -48,22 +49,13 @@ export class TableComponent implements OnInit, OnDestroy {
     }
   }
 
-  private rebuildAllElementTypes() {
+  private listAllElementTypes(): void {
     this.mainService
       .getAllElementTypes()
-      .pipe(
-        takeUntil(this._destroyed$)
-      )
+      .pipe(takeUntil(this._destroyed$))
       .subscribe(
-        (res) => {
-          res.forEach((type) => {
-            const _ =
-              this.elementTypes.find((et) => et.uri === type.uri.split('@').shift()) ||
-              this.elementTypes.push({
-                ...type,
-                uri: type.uri.split('@').shift()
-              });
-          });
+        (elementTypes) => {
+          this.elementTypes = this.dataBuildService.rebuildAllElementTypes(elementTypes);
         },
         (err) => {
           console.log(err);
