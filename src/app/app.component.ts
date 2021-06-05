@@ -18,7 +18,7 @@ export class AppComponent implements OnInit {
     this.elements$ = this.mainService.getAllElements();
   }
 
-  onSelected(element: Element) {
+  onSelected(element: Element): void {
     this.selected = element;
   }
 }
