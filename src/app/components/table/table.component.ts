@@ -52,21 +52,23 @@ export class TableComponent implements OnInit, OnDestroy {
     this.mainService
       .getAllElementTypes()
       .pipe(
-        takeUntil(this._destroyed$),
-        catchError((err) => {
-          return of(err);
-        })
+        takeUntil(this._destroyed$)
       )
-      .subscribe((res) => {
-        res.forEach((type) => {
-          const _ =
-            this.elementTypes.find((et) => et.uri === type.uri.split('@').shift()) ||
-            this.elementTypes.push({
-              ...type,
-              uri: type.uri.split('@').shift()
-            });
-        });
-      });
+      .subscribe(
+        (res) => {
+          res.forEach((type) => {
+            const _ =
+              this.elementTypes.find((et) => et.uri === type.uri.split('@').shift()) ||
+              this.elementTypes.push({
+                ...type,
+                uri: type.uri.split('@').shift()
+              });
+          });
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
   }
 
   ngOnDestroy() {
