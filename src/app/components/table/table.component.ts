@@ -11,10 +11,10 @@ export class TableComponent implements OnInit {
   public set elements(elements: Array<Element>) {
     /** We want to show same type elements in same column */
     elements.forEach((element) => {
-      element.type = element.type.split('@').shift();
-      this.elementTypeMap[element.type] ? this.elementTypeMap[element.type].push(element) : (this.elementTypeMap[element.type] = [element]);
+      const type = element.type.split('@').shift();
+      this.elementTypeMap[type] ? this.elementTypeMap[type].push(element) : (this.elementTypeMap[type] = [element]);
+      this.elementCountPerType[type] = this.elementTypeMap[type].length
     });
-    Object.keys(this.elementTypeMap).forEach((type) => (this.elementCountPerType[type] = this.elementTypeMap[type].length));
   }
 
   @Output()
