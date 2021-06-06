@@ -31,6 +31,8 @@ export class TableComponent implements OnInit, OnDestroy {
   public elementTypes: Array<ElementType> = [];
   public elementCountPerType: { [type: string]: number } = {};
   public selectedElement: Element = null;
+  public hasError = false;
+  public isLoading = false;
 
   constructor(private readonly mainService: MainService, private dataBuildService: DataBuildService) {}
 
@@ -50,15 +52,18 @@ export class TableComponent implements OnInit, OnDestroy {
   }
 
   private listAllElementTypes(): void {
+    this.isLoading = true;
     this.mainService
       .getAllElementTypes()
       .pipe(takeUntil(this._destroyed$))
       .subscribe(
         (elementTypes) => {
           this.elementTypes = this.dataBuildService.rebuildAllElementTypes(elementTypes);
+          this.isLoading = false;
         },
         (err) => {
-          console.log(err);
+          this.hasError = true;
+          this.isLoading = false;
         }
       );
   }

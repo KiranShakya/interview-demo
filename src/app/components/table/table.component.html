@@ -1,4 +1,4 @@
-<table>
+<table *ngIf="!hasError && !isLoading; else showErrorLoading">
   <thead>
     <tr>
       <th *ngFor="let type of elementTypes">{{ type.name }}</th>
@@ -16,3 +16,8 @@
     </tr>
   </tbody>
 </table>
+<ng-template #showErrorLoading>
+  <div *ngIf="hasError; else loader">Something Went Wrong</div>
+
+  <ng-template #loader> Loading </ng-template>
+</ng-template>
