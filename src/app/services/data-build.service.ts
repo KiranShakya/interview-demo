@@ -7,14 +7,14 @@ import { ElementType } from '../model/element-type.model';
 export class DataBuildService {
   rebuildAllElementTypes(elementTypes: Array<ElementType>): Array<ElementType> {
     let _elementTypes = [];
+
     elementTypes.forEach((type) => {
-      const _ =
-        _elementTypes.find((et) => et.uri === type.uri.split('@').shift()) ||
-        _elementTypes.push({
-          ...type,
-          uri: type.uri.split('@').shift()
-        });
+      const uri = type.uri.split('@').shift();
+      const matchElementTypes = _elementTypes.find((et) => et.uri === uri);
+
+      if (!matchElementTypes) _elementTypes.push({ ...type, uri });
     });
+
     return _elementTypes;
   }
 }
