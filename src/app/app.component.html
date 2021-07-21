@@ -1,2 +1,9 @@
+<h4>Issues ( changes done )</h4>
+<ul>
+  <li>console error were removed. (checked for null value while populating data) </li>
+  <li>selected Data was not populate while clicking the first time. (changedetetion was implement for the child view.)</li>
+  <li>while selecting master data type was not populate in 	Wartime Haiku (spliting the string and taking 0 index to compare value.)</li>
+</ul>
+
 <ui-table [elements]="elements" (selected)="onSelected($event)"></ui-table>
 <ui-detail-panel [element]="selected" *ngIf="selected"></ui-detail-panel>

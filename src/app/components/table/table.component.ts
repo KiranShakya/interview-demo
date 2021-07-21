@@ -1,20 +1,24 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
+import { element } from 'protractor';
 import { Element, ElementType, MainService } from 'src/app/services/main.service';
 
 @Component({
   selector: 'ui-table',
   templateUrl: './table.component.html',
-  styleUrls: ['./table.component.scss']
+  styleUrls: ['./table.component.scss'],
 })
 export class TableComponent implements OnInit {
   @Input()
-  public set elements(elements: Array<Element>) {
+  public set elements(arrData: Array<Element>) {
     /** We want to show same type elements in same column */
-    elements.forEach((element) => {
-      element.type = element.type.split('@').shift();
-      this.elementTypeMap[element.type] ? this.elementTypeMap[element.type].push(element) : (this.elementTypeMap[element.type] = [element]);
-    });
-    Object.keys(this.elementTypeMap).forEach((type) => (this.elementCountPerType[type] = this.elementTypeMap[type].length));
+    if(arrData){
+      arrData.forEach((element) => {
+        element.type = element.type.split('@').shift();
+        this.elementTypeMap[element.type] ? this.elementTypeMap[element.type].push(element) : (this.elementTypeMap[element.type] = [element]);
+      });
+      Object.keys(this.elementTypeMap).forEach((type) => (this.elementCountPerType[type] = this.elementTypeMap[type].length));
+    }
+
   }
 
   @Output()
@@ -25,7 +29,7 @@ export class TableComponent implements OnInit {
   public elementCountPerType: { [type: string]: number } = {};
   public selectedElement: Element = null;
 
-  constructor(private readonly mainService: MainService) {}
+  constructor(private readonly mainService: MainService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit() {
     (async () => {
@@ -38,6 +42,7 @@ export class TableComponent implements OnInit {
             ...type,
             uri: type.uri.split('@').shift()
           });
+
       });
     })();
   }

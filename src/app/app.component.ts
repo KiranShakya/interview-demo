@@ -18,6 +18,7 @@ export class AppComponent implements OnInit {
     })();
   }
   onSelected(elementUri: string) {
+    console.log(elementUri, this.elements);
     this.selected = this.elements.find(el => el.uri === elementUri);
   }
 }
