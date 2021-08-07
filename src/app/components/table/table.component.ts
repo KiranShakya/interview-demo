@@ -10,10 +10,14 @@ export class TableComponent implements OnInit {
   @Input()
   public set elements(elements: Array<Element>) {
     /** We want to show same type elements in same column */
-    elements.forEach((element) => {
-      element.type = element.type.split('@').shift();
-      this.elementTypeMap[element.type] ? this.elementTypeMap[element.type].push(element) : (this.elementTypeMap[element.type] = [element]);
-    });
+     /**Check if is defined and is arrray before forEach operation */
+     Array.isArray(elements)
+     && elements.forEach((element) => {
+         /**  Here was the error due to which a japanese elementType haiku@japan was not visible */
+         let elementType = element.type.split('@').shift();
+         this.elementTypeMap[elementType] ? this.elementTypeMap[elementType].push(element) : (this.elementTypeMap[elementType] = [element]);
+       })
+       
     Object.keys(this.elementTypeMap).forEach((type) => (this.elementCountPerType[type] = this.elementTypeMap[type].length));
   }
 
