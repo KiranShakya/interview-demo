@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Input, ChangeDetectorRef } from '@angular/core';
 import { Element, ElementType, MainService } from 'src/app/services/main.service';
 
 @Component({
@@ -13,11 +13,12 @@ export class DetailPanelComponent implements OnInit {
 
   public elementTypes: Array<ElementType>;
 
-  constructor(private readonly mainService: MainService) {}
+  constructor(private readonly mainService: MainService, private changeDetector: ChangeDetectorRef) {}
 
   ngOnInit() {
     (async () => {
       this.elementTypes = await this.mainService.getAllElementTypes().toPromise();
+      this.changeDetector.markForCheck();
     })();
   }
 }

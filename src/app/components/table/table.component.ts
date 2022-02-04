@@ -10,7 +10,7 @@ export class TableComponent implements OnInit {
   @Input()
   public set elements(elements: Array<Element>) {
     /** We want to show same type elements in same column */
-    elements.forEach((element) => {
+    Array.isArray(elements) && elements.forEach((element) => {
       element.type = element.type.split('@').shift();
       this.elementTypeMap[element.type] ? this.elementTypeMap[element.type].push(element) : (this.elementTypeMap[element.type] = [element]);
     });
