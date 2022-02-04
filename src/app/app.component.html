@@ -1,2 +1,10 @@
+<h2>Issues and Bug fixes/Changes done.</h2>
+<ul>
+  <li>console error were removed. Check is added for null value.</li>
+  <li>While clicking a row in the list for the first time. Type was not showing in detail view. Added change detector for this.</li>
+  <li>While clicking a row in the list for element type having '@'. Type was not showing in detail view. For that, change is made in pipe (findByKeyValue) spliting the value to compare with element type. Or we can also compare with elementType name instead of uri (elementType['name'].toLowerCase() === element.type.toLowerCase()).</li>
+  <li>Addded a count for each element type in table head.</li>
+</ul>
+
 <ui-table [elements]="elements" (selected)="onSelected($event)"></ui-table>
 <ui-detail-panel [element]="selected" *ngIf="selected"></ui-detail-panel>
