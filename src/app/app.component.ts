@@ -7,7 +7,7 @@ import { Element, MainService } from './services/main.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  public elements: Array<Element>;
+  public elements: Array<Element> = [];
   public selected: Element;
 
   constructor(private readonly mainService: MainService) {}
