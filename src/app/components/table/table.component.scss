@@ -12,11 +12,18 @@ th {
 }
 
 .active {
-  background-color: cornflowerblue;
+  background-color: rgb(196, 190, 190);
 }
+
 td {
   cursor: pointer;
+
+  &:hover {
+    background-color: rgb(196, 190, 190);
+  }
+
   &.disabled {
-      cursor: not-allowed;
+    cursor: not-allowed;
+    background-color: #ffffff;
   }
 }
