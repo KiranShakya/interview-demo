@@ -1,2 +1,2 @@
 <ui-table [elements]="elements" (selected)="onSelected($event)"></ui-table>
-<ui-detail-panel [element]="selected"></ui-detail-panel>
+<ui-detail-panel [element]="selected" *ngIf="selected"></ui-detail-panel>
