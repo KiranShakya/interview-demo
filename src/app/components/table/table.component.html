@@ -1,7 +1,7 @@
 <table>
   <thead>
     <tr>
-      <th *ngFor="let type of elementTypes">{{ type.name }}</th>
+      <th *ngFor="let type of elementTypes">{{ type.name }} ({{ elementCountPerType[type.uri] }})</th>
     </tr>
   </thead>
   <tbody>
