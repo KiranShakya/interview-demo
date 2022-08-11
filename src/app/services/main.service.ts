@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
+import { delay } from 'rxjs/operators';
 import { MyCollection } from '../mockData/elements';
 import { JapaneseElementTypes, LocalElementTypes } from '../mockData/elementTypes';
 
@@ -14,7 +15,6 @@ export interface ElementType {
   name: string;
 }
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -26,10 +26,10 @@ export class MainService {
   constructor() {}
 
   public getAllElements(): Observable<Array<Element>> {
-    return of(this.allElements);
+    return of(this.allElements).pipe(delay(500));
   }
 
   public getAllElementTypes(): Observable<Array<ElementType>> {
-    return of(this.elementTypes);
+    return of(this.elementTypes)
   }
 }
