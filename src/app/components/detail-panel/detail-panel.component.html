@@ -1,20 +1,21 @@
-<dl>
-    <dt>
-        Uri
-    </dt>
+<ng-container *ngIf="elementTypes$ | async as elementTypes; else showLoading">
+  <dl>
+    <dt>Uri</dt>
     <dd>
-        {{ element.uri }}
+      {{ element.uri }}
     </dd>
-    <dt>
-        Type
-    </dt>
+    <dt>Type</dt>
     <dd>
-        {{ (elementTypes | findByKeyValue: 'uri' : element.type)?.name }}
+      {{ (elementTypes | findByKeyValue: 'uri':element.type)?.name }}
     </dd>
-    <dt>
-        Name
-    </dt>
+    <dt>Name</dt>
     <dd>
-        {{ element.name }}
+      {{ element.name }}
     </dd>
-</dl>
+  </dl>
+</ng-container>
+<ng-template #showLoading>
+  <div *ngIf="isError; else loader">Something Went Wrong</div>
+
+  <ng-template #loader> Loading... </ng-template>
+</ng-template>
