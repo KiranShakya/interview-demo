@@ -1,6 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { Element } from 'src/app/data/book/schema/element.model';
 import { ElementType } from 'src/app/data/book/schema/element-type.model';
 import { BookService } from 'src/app/data/book/service/book.service';
 

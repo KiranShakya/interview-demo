@@ -1,4 +1,4 @@
-<table *ngIf="!hasError && !isLoading; else showLoading">
+<table *ngIf="!isError && !isLoading; else showLoading">
   <thead>
     <tr>
       <th *ngFor="let type of elementTypes">{{ type.name }} ({{ elementCountPerType[type.uri] }})</th>
