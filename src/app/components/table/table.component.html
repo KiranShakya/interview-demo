@@ -1,7 +1,7 @@
-<table>
+<table *ngIf="!hasError && !isLoading; else showLoading">
   <thead>
     <tr>
-      <th *ngFor="let type of elementTypes">{{ type.name }}</th>
+      <th *ngFor="let type of elementTypes">{{ type.name }} ({{ elementCountPerType[type.uri] }})</th>
     </tr>
   </thead>
   <tbody>
@@ -16,3 +16,10 @@
     </tr>
   </tbody>
 </table>
+<ng-template #showLoading>
+  <div *ngIf="isError; else loader">Something Went Wrong</div>
+
+  <ng-template #loader>
+    <app-spinner></app-spinner>
+  </ng-template>
+</ng-template>
