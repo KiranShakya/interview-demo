@@ -3,22 +3,13 @@ import { Observable, of } from 'rxjs';
 import { delay } from 'rxjs/operators';
 import { MyCollection } from '../mockData/elements';
 import { JapaneseElementTypes, LocalElementTypes } from '../mockData/elementTypes';
-
-export interface Element {
-  uri: string;
-  type: string;
-  name: string;
-}
-
-export interface ElementType {
-  uri: string;
-  name: string;
-}
+import { Element } from '../schema/element.model';
+import { ElementType } from '../schema/element-type.model';
 
 @Injectable({
   providedIn: 'root'
 })
-export class MainService {
+export class BookService {
   /** Cached mock data */
   private readonly elementTypes: Array<ElementType> = LocalElementTypes.concat(JapaneseElementTypes);
   private readonly allElements: Array<Element> = MyCollection;
@@ -30,6 +21,6 @@ export class MainService {
   }
 
   public getAllElementTypes(): Observable<Array<ElementType>> {
-    return of(this.elementTypes)
+    return of(this.elementTypes);
   }
 }

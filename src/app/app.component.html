@@ -1,9 +1,1 @@
-<ng-container *ngIf="elements$ | async as elements; else showLoading">
-  <ui-table [elements]="elements" (selected)="onSelected($event)"></ui-table>
-</ng-container>
-<ng-template #showLoading>
-  <div *ngIf="isError; else loader">Something Went Wrong</div>
-
-  <ng-template #loader> <app-spinner></app-spinner> </ng-template>
-</ng-template>
-<ui-detail-panel [element]="selected" *ngIf="selected"></ui-detail-panel>
+<router-outlet></router-outlet>

@@ -1,4 +1,4 @@
-import { Element } from '../services/main.service';
+import { Element } from '../schema/element.model';
 
 export const MyCollection: Array<Element> = [
   { uri: 'book1', name: 'Happy Putter Vol 2', type: 'novel' },

@@ -1,7 +1,9 @@
 import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { Element, ElementType, MainService } from 'src/app/services/main.service';
+import { Element } from 'src/app/data/book/schema/element.model';
+import { ElementType } from 'src/app/data/book/schema/element-type.model';
+import { BookService } from 'src/app/data/book/service/book.service';
 import { filterElementTypes } from 'src/app/helpers/filter-element-type';
 @Component({
   selector: 'ui-table',
@@ -31,7 +33,7 @@ export class TableComponent implements OnInit, OnDestroy {
 
   _destroyed$: Subject<boolean> = new Subject<boolean>();
 
-  constructor(private readonly mainService: MainService) {}
+  constructor(private readonly bookService: BookService) {}
 
   ngOnInit() {
     this._getElementTypes();
@@ -50,7 +52,7 @@ export class TableComponent implements OnInit, OnDestroy {
 
   private _getElementTypes(): void {
     this.isLoading = true;
-    this.mainService
+    this.bookService
       .getAllElementTypes()
       .pipe(takeUntil(this._destroyed$))
       .subscribe(

@@ -1,4 +1,4 @@
-import { ElementType } from '../services/main.service';
+import { ElementType } from '../data/book/schema/element-type.model';
 
 export const filterElementTypes = (elementTypes: Array<ElementType>): Array<ElementType> => {
   let _elementTypes = [];
